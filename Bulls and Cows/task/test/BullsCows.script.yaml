@@ -8,9 +8,6 @@
   - "{0}"
 
 - - find
-  - (\b\d ([cC]ow|[bB]ull))|[nN]one\b
-  - The testing system didn't find a pairs of bulls and cows or None in your program's output.
+  - \b\d{{0}}\b
+  - The output number of your program has an incorrect length.
 
-- - find
-  - \b\d{4}\b
-  - The testing system didn't find a "secret" number in your program's output.

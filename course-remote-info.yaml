@@ -12,10 +12,10 @@ stages:
   is_completed: true
 - id: 289
   step: 5431
-  is_completed: false
+  is_completed: true
 - id: 290
   step: 5432
-  is_completed: false
+  is_completed: true
 - id: 291
   step: 5433
   is_completed: false
@@ -97,7 +97,7 @@ topics:
     theory_id: 3812
   3:
   - title: IDE
-    theory_id: 3805
+    theory_id: 10996
   - title: IntelliJ IDEA
     theory_id: 3801
   4:
