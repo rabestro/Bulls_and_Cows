@@ -2,31 +2,41 @@ package bullscows;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Game implements Runnable {
-    private final String secreteCode = "9305";
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public void run() {
-        try {
-            final var length = Integer.parseInt(new Scanner(System.in).next("[1-9]|10"));
-            System.out.println("The random secret number is " + getRandomNumber(length) + ".");
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Input mismatch.");
+        System.out.println("Please, enter the secret code's length:");
+        final var length = Integer.parseInt(scanner.next("[1-9]|10"));
+        final var secretCode = SecretCode.getCode(length);
+        final var codePattern = Pattern.compile("\\d{" + secretCode.length() + '}');
+        System.out.println("Okay, let's start a game!");
+        int turn = 0;
+        while (true) {
+            turn++;
+            System.out.println("Turn " + turn);
+            try {
+                SecretCode.Grade grade = secretCode.getGrade(scanner.next(codePattern));
+                System.out.println("Grade: " + grade);
+                if (grade.isGuessed()) {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: incorrect length of guess");
+            }
         }
+        System.out.println("Congratulations! You guessed the secret code.");
+
     }
 
     private String grade(String guess) {
         int cows = 0;
         int bulls = 0;
 
-        for (int i = 0; i < 4; i++) {
-            if (guess.charAt(i) == secreteCode.charAt(i)) {
-                bulls++;
-            } else if (secreteCode.indexOf(guess.charAt(i)) > -1) {
-                cows++;
-            }
-        }
+
         if (bulls + cows == 0) {
             return "None.";
         }
@@ -42,22 +52,4 @@ public class Game implements Runnable {
         return result + ".";
     }
 
-    private String getRandomNumber(int length) {
-        long pseudoRandomNumber = System.nanoTime();
-        final var result = new StringBuffer();
-        while (result.length() < length) {
-            if (pseudoRandomNumber == 0) {
-                pseudoRandomNumber = System.nanoTime();
-            }
-            var digit = pseudoRandomNumber % 10;
-            pseudoRandomNumber /= 10;
-            if (result.length() == 0 && digit == 0) {
-                continue;
-            }
-            if (result.indexOf(String.valueOf(digit)) == -1) {
-                result.append(String.valueOf(digit));
-            }
-        }
-        return result.toString();
-    }
 }
