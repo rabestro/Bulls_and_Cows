@@ -1,5 +1,8 @@
 package bullscows;
 
+import static java.lang.Integer.signum;
+import static java.text.MessageFormat.format;
+
 public class SecretCode {
     private final String secretCode;
 
@@ -31,6 +34,9 @@ public class SecretCode {
     }
 
     public Grade getGrade(String guess) {
+        if (guess.length() != secretCode.length()) {
+            throw new IllegalArgumentException("The lengths of guess and secret code must be equal");
+        }
         return new Grade(guess);
     }
 
@@ -62,8 +68,9 @@ public class SecretCode {
 
         @Override
         public String toString() {
-            return "None.";
+            return format("{0, choice, 0#|1#1 bull|1< {0,number,integer} bulls}", bulls)
+                    + format("{0, choice, 0#None|1#|2# and }", signum(bulls) + signum(cows))
+                    + format("{0, choice, 0#|1#1 cow|1< {0,number,integer} cows}", cows);
         }
     }
-
 }

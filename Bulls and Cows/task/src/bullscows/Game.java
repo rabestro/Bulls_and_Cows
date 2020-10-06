@@ -29,27 +29,6 @@ public class Game implements Runnable {
             }
         }
         System.out.println("Congratulations! You guessed the secret code.");
-
-    }
-
-    private String grade(String guess) {
-        int cows = 0;
-        int bulls = 0;
-
-
-        if (bulls + cows == 0) {
-            return "None.";
-        }
-        String result;
-        if (bulls > 0) {
-            result = bulls + " bull(s)";
-            if (cows > 0) {
-                result += " and " + cows + " cow(s)";
-            }
-        } else {
-            result = cows + " cow(s)";
-        }
-        return result + ".";
     }
 
 }
