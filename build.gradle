@@ -16,6 +16,8 @@ subprojects {
     }
 
     dependencies {
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
+        compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.11.2'
         testImplementation 'com.github.hyperskill:hs-test:release-SNAPSHOT'
     }
 
