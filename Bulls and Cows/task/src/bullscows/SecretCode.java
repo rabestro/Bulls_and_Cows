@@ -3,7 +3,7 @@ package bullscows;
 import static java.lang.Integer.signum;
 import static java.text.MessageFormat.format;
 
-public class SecretCode {
+public final class SecretCode {
     private final String secretCode;
 
     private SecretCode(String secretCode) {
@@ -44,7 +44,7 @@ public class SecretCode {
         return secretCode.length();
     }
 
-    public class Grade {
+    public final class Grade {
         private final int bulls;
         private final int cows;
 

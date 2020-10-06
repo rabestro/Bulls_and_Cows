@@ -2,9 +2,8 @@ package bullscows;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
-public class Game implements Runnable {
+public final class Game implements Runnable {
     private static final Scanner scanner = new Scanner(System.in);
     private final SecretCode secretCode;
 
@@ -25,14 +24,13 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        final var codePattern = Pattern.compile("\\d{" + secretCode.length() + '}');
         System.out.println("Okay, let's start a game!");
         int turn = 0;
         while (true) {
             turn++;
             System.out.println("Turn " + turn);
             try {
-                SecretCode.Grade grade = secretCode.getGrade(scanner.next(codePattern));
+                final var grade = secretCode.getGrade(scanner.nextLine());
                 System.out.println("Grade: " + grade);
                 if (grade.isGuessed()) {
                     break;
