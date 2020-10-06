@@ -1,6 +1,5 @@
 package bullscows;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public final class Game implements Runnable {
@@ -29,14 +28,10 @@ public final class Game implements Runnable {
         while (true) {
             turn++;
             System.out.println("Turn " + turn);
-            try {
-                final var grade = secretCode.getGrade(scanner.nextLine());
-                System.out.println("Grade: " + grade);
-                if (grade.isGuessed()) {
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Error: incorrect length of guess");
+            final var grade = secretCode.getGrade(scanner.nextLine());
+            System.out.println("Grade: " + grade);
+            if (grade.isGuessed()) {
+                break;
             }
         }
         System.out.println("Congratulations! You guessed the secret code.");
