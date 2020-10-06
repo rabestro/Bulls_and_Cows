@@ -5,13 +5,26 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Game implements Runnable {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
+    private final SecretCode secretCode;
+
+    private Game(SecretCode secretCode) {
+        this.secretCode = secretCode;
+    }
+
+    public static Game getGame() {
+        while (true) {
+            System.out.println("Please, enter the secret code's length:");
+            final var length = Integer.parseInt(scanner.nextLine());
+            if (length > 0 && length <= 10) {
+                return new Game(SecretCode.getCode(length));
+            }
+            System.out.println("Error: incorrect length value");
+        }
+    }
 
     @Override
     public void run() {
-        System.out.println("Please, enter the secret code's length:");
-        final var length = Integer.parseInt(scanner.next("[1-9]|10"));
-        final var secretCode = SecretCode.getCode(length);
         final var codePattern = Pattern.compile("\\d{" + secretCode.length() + '}');
         System.out.println("Okay, let's start a game!");
         int turn = 0;
