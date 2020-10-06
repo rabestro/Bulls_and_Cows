@@ -1,5 +1,6 @@
 package bullscows;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game implements Runnable {
@@ -7,8 +8,12 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        final var guess = new Scanner(System.in).next("\\d{4}");
-        System.out.println(grade(guess) + " The secret code is " + secreteCode + ".");
+        try {
+            final var length = Integer.parseInt(new Scanner(System.in).next("[1-9]|10"));
+            System.out.println("The random secret number is " + getRandomNumber(length) + ".");
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Input mismatch.");
+        }
     }
 
     private String grade(String guess) {
@@ -37,7 +42,22 @@ public class Game implements Runnable {
         return result + ".";
     }
 
-    private long getRandomNumber(int length) {
-        return 0;
+    private String getRandomNumber(int length) {
+        long pseudoRandomNumber = System.nanoTime();
+        final var result = new StringBuffer();
+        while (result.length() < length) {
+            if (pseudoRandomNumber == 0) {
+                pseudoRandomNumber = System.nanoTime();
+            }
+            var digit = pseudoRandomNumber % 10;
+            pseudoRandomNumber /= 10;
+            if (result.length() == 0 && digit == 0) {
+                continue;
+            }
+            if (result.indexOf(String.valueOf(digit)) == -1) {
+                result.append(String.valueOf(digit));
+            }
+        }
+        return result.toString();
     }
 }
