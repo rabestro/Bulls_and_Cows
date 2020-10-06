@@ -36,4 +36,8 @@ public class Game implements Runnable {
         }
         return result + ".";
     }
+
+    private long getRandomNumber(int length) {
+        return 0;
+    }
 }
