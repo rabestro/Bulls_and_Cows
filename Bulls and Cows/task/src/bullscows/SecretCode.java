@@ -1,5 +1,7 @@
 package bullscows;
 
+import java.util.Random;
+
 import static java.lang.Integer.signum;
 import static java.text.MessageFormat.format;
 
@@ -16,13 +18,9 @@ public final class SecretCode {
                     "The length of security code should be from 1 to 10");
         }
         final var result = new StringBuffer();
-        var pseudoRandomNumber = System.nanoTime();
+        final var random = new Random();
         while (result.length() < length) {
-            if (pseudoRandomNumber == 0) {
-                pseudoRandomNumber = System.nanoTime();
-            }
-            var digit = pseudoRandomNumber % 10;
-            pseudoRandomNumber /= 10;
+            final var digit = random.nextInt(10);
             if (result.length() == 0 && digit == 0) {
                 continue;
             }
