@@ -8,9 +8,11 @@ import static java.text.MessageFormat.format;
 public final class SecretCode {
     private static final String SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyz";
     private final String secretCode;
+    private final int codeSymbols;
 
-    private SecretCode(String secretCode) {
+    private SecretCode(String secretCode, int codeSymbols) {
         this.secretCode = secretCode;
+        this.codeSymbols = codeSymbols;
     }
 
     public static SecretCode create(final int codeLength, final int codeSymbols) {
@@ -25,7 +27,14 @@ public final class SecretCode {
                 result.append(symbol);
             }
         }
-        return new SecretCode(result.toString());
+        return new SecretCode(result.toString(), codeSymbols);
+    }
+
+    @Override
+    public String toString() {
+        return "*".repeat(secretCode.length())
+                + format(" ({0, choice, 1<0-{1}|11#0-9, a|11<0-9, a-{1}})",
+                codeSymbols, SYMBOLS.charAt(codeSymbols - 1));
     }
 
     public Grade getGrade(String guess) {

@@ -24,13 +24,14 @@ public final class Game implements Runnable {
         while (true) {
             System.out.println("Input the number of possible symbols in the code:");
             codeSymbols = Integer.parseInt(scanner.nextLine());
-            if (codeSymbols > 9 && codeSymbols <= 36) {
+            if (codeSymbols >= codeLength && codeSymbols <= 36) {
                 break;
             }
             System.out.println("Error: incorrect number of symbols");
         }
-        System.out.println("The secret is prepared: " + "*".repeat(codeLength));
-        return new Game(SecretCode.create(codeLength, codeSymbols));
+        final var secretCode = SecretCode.create(codeLength, codeSymbols);
+        System.out.println("The secret is prepared: " + secretCode);
+        return new Game(secretCode);
     }
 
     @Override
