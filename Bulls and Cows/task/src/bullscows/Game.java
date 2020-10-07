@@ -1,8 +1,13 @@
 package bullscows;
 
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+
+import static java.util.Optional.empty;
 
 public final class Game implements Runnable {
+    private static final Pattern PATTERN_NUMBER = Pattern.compile("[1-9]|[12][0-9]|3[0-6]");
     private static final Scanner scanner = new Scanner(System.in);
     private final SecretCode secretCode;
 
@@ -10,28 +15,30 @@ public final class Game implements Runnable {
         this.secretCode = secretCode;
     }
 
-    public static Game create() {
-        int codeLength;
-        while (true) {
-            System.out.println("Please, enter the secret code's length:");
-            codeLength = Integer.parseInt(scanner.nextLine());
-            if (codeLength > 0 && codeLength <= 36) {
-                break;
-            }
-            System.out.println("Error: incorrect length value");
+    public static Optional<Game> create() {
+        System.out.println("Please, enter the secret code's length:");
+        var input = scanner.nextLine();
+        if (!PATTERN_NUMBER.matcher(input).matches()) {
+            System.out.println("Error: the secret code's length should be a number from 1 to 36");
+            return empty();
         }
-        int codeSymbols;
-        while (true) {
-            System.out.println("Input the number of possible symbols in the code:");
-            codeSymbols = Integer.parseInt(scanner.nextLine());
-            if (codeSymbols >= codeLength && codeSymbols <= 36) {
-                break;
-            }
-            System.out.println("Error: incorrect number of symbols");
+        final int codeLength = Integer.parseInt(input);
+
+        System.out.println("Input the number of possible symbols in the code:");
+        input = scanner.nextLine();
+        if (!PATTERN_NUMBER.matcher(input).matches()) {
+            System.out.println("Error: the number of possible symbols in the code should be from 1 to 36");
+            return empty();
+        }
+        final int codeSymbols = Integer.parseInt(input);
+        if (codeSymbols < codeLength) {
+            System.out.println("Error: it's not possible to generate a code with a length of "
+                    + codeLength + " with " + codeSymbols + " unique symbols.");
+            return empty();
         }
         final var secretCode = SecretCode.create(codeLength, codeSymbols);
         System.out.println("The secret is prepared: " + secretCode);
-        return new Game(secretCode);
+        return Optional.of(new Game(secretCode));
     }
 
     @Override
