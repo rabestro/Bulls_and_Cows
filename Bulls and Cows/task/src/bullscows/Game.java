@@ -11,14 +11,27 @@ public final class Game implements Runnable {
     }
 
     public static Game create() {
+        int codeLength;
         while (true) {
             System.out.println("Please, enter the secret code's length:");
-            final var length = Integer.parseInt(scanner.nextLine());
-            if (length > 0 && length <= 10) {
-                return new Game(SecretCode.create(length));
+            codeLength = Integer.parseInt(scanner.nextLine());
+            if (codeLength > 0 && codeLength <= 36) {
+                break;
             }
             System.out.println("Error: incorrect length value");
         }
+        int codeSymbols;
+        while (true) {
+            System.out.println("Input the number of possible symbols in the code:");
+            codeSymbols = Integer.parseInt(scanner.nextLine());
+            if (codeSymbols >= codeLength && codeSymbols <= 36) {
+                break;
+            }
+            System.out.println("Error: incorrect number of symbols");
+        }
+        final var secretCode = SecretCode.create(codeLength, codeSymbols);
+        System.out.println("The secret is prepared: " + secretCode);
+        return new Game(secretCode);
     }
 
     @Override
