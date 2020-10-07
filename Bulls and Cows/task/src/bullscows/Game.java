@@ -10,12 +10,12 @@ public final class Game implements Runnable {
         this.secretCode = secretCode;
     }
 
-    public static Game getGame() {
+    public static Game create() {
         while (true) {
             System.out.println("Please, enter the secret code's length:");
             final var length = Integer.parseInt(scanner.nextLine());
             if (length > 0 && length <= 10) {
-                return new Game(SecretCode.getCode(length));
+                return new Game(SecretCode.create(length));
             }
             System.out.println("Error: incorrect length value");
         }

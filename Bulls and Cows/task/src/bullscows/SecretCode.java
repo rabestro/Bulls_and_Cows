@@ -12,7 +12,7 @@ public final class SecretCode {
         this.secretCode = secretCode;
     }
 
-    public static SecretCode getCode(int length) {
+    public static SecretCode create(int length) {
         if (length < 1 || length > 10) {
             throw new IllegalArgumentException(
                     "The length of security code should be from 1 to 10");
