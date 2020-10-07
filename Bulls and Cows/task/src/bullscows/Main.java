@@ -2,6 +2,6 @@ package bullscows;
 
 public final class Main {
     public static void main(String[] args) {
-        Game.getGame().run();
+        Game.create().run();
     }
 }
