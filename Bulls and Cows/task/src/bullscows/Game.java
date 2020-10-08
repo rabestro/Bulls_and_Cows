@@ -44,16 +44,16 @@ public final class Game implements Runnable {
     @Override
     public void run() {
         System.out.println("Okay, let's start a game!");
-        int turn = 0;
-        while (true) {
-            turn++;
-            System.out.println("Turn " + turn);
+        int turn = 1;
+        var isGuessed = false;
+
+        do {
+            System.out.println("Turn " + turn++);
             final var grade = secretCode.getGrade(scanner.nextLine());
             grade.ifPresentOrElse(System.out::println, this::printInputMismatch);
-            if (grade.isPresent() && grade.get().isGuessed()) {
-                break;
-            }
-        }
+            isGuessed = grade.isPresent() && grade.get().isGuessed();
+        } while (!isGuessed);
+
         System.out.println("Congratulations! You guessed the secret code.");
     }
 
