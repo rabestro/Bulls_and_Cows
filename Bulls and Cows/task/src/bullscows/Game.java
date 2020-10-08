@@ -49,12 +49,15 @@ public final class Game implements Runnable {
             turn++;
             System.out.println("Turn " + turn);
             final var grade = secretCode.getGrade(scanner.nextLine());
-            System.out.println("Grade: " + grade);
-            if (grade.isGuessed()) {
+            grade.ifPresentOrElse(System.out::println, this::printInputMismatch);
+            if (grade.isPresent() && grade.get().isGuessed()) {
                 break;
             }
         }
         System.out.println("Congratulations! You guessed the secret code.");
     }
 
+    private void printInputMismatch() {
+        System.out.println("The input does not match the pattern of the secret code.");
+    }
 }
