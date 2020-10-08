@@ -11,7 +11,7 @@ public final class Game implements Runnable {
     private static final Scanner scanner = new Scanner(System.in);
     private final SecretCode secretCode;
 
-    private Game(SecretCode secretCode) {
+    private Game(final SecretCode secretCode) {
         this.secretCode = secretCode;
     }
 
@@ -58,6 +58,6 @@ public final class Game implements Runnable {
     }
 
     private void printInputMismatch() {
-        System.out.println("The input does not match the pattern of the secret code.");
+        System.out.println("Can't grade: the input doesn't match the pattern of the secret code.");
     }
 }

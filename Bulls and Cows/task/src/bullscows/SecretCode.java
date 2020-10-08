@@ -1,6 +1,9 @@
 package bullscows;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static java.lang.Integer.signum;
@@ -12,7 +15,7 @@ public final class SecretCode {
     private final int numberOfSymbols;
     private final Pattern codePattern;
 
-    private SecretCode(String secretCode, int numberOfSymbols) {
+    private SecretCode(final String secretCode, final int numberOfSymbols) {
         this.secretCode = secretCode;
         this.numberOfSymbols = numberOfSymbols;
         codePattern = Pattern.compile(format("[{0, choice, 1#0|1<0-{1}|11#0-9a|11<0-9a-{1}}]'{'{2}'}'",
@@ -33,7 +36,7 @@ public final class SecretCode {
                 numberOfSymbols, SYMBOLS.charAt(numberOfSymbols - 1));
     }
 
-    public Optional<Grade> getGrade(String guess) {
+    public Optional<Grade> getGrade(final String guess) {
         if (!codePattern.matcher(guess).matches()) {
             return Optional.empty();
         }
